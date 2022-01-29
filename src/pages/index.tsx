@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
-import styles from "../styles/Home.module.css";
-import { Button } from "semantic-ui-react";
+import styles from "../styles/home.module.css";
+import Editor from "../components/Editor/Editor";
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <h1>Welcome!</h1>
-      <Button content="Jakiś button" />
+      <Editor />
     </div>
   );
 };

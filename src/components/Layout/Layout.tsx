@@ -1,11 +1,12 @@
 import { FC } from "react";
-import classes from "./layout.module.sass";
+import classes from "./Layout.module.sass";
+import ScenariosMenu from "../ScenariosMenu/ScenariosMenu";
 
 const Layout: FC = ({ children }) => (
     <div className={classes.page}>
         <aside className={classes.sidebar}>
             <section>
-                Sidebar
+                <ScenariosMenu />
             </section>
         </aside>
         <main className={classes.content}>
