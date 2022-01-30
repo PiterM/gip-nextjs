@@ -10,7 +10,7 @@ const Editor: FC = () => {
   const currentScenario = useSelector(getCurrentScenario);
   const dispatch = useDispatch();
 
-  if (!currentScenario || !currentScenario.title) {
+  if (!currentScenario || !currentScenario.type) {
     return (
       <div className={classes.logo}>
         <img src="images/gip-logo.png" alt="GIP Editor" />
@@ -23,24 +23,25 @@ const Editor: FC = () => {
     return (
       <>
         <div className={classes["dialog-title"]}>
-          <input className="uk-input" value={title} onInput={setTitleHandler} />
+          <input className="uk-input" value={title} onInput={setTitleHandler} placeholder="tytuł..." />
         </div>
         <div className={classes["dialog-intro"]}>
-          <textarea className="uk-textarea" rows={2} onInput={setIntroHandler} value={intro} />
+          <textarea className="uk-textarea" rows={2} onInput={setIntroHandler} value={intro} placeholder="intro..." />
         </div>
       </>
     );
   };
 
   const renderDialog = () => {
-    const { dialogArray } = currentScenario;
+    const { dialogArray, focusKey } = currentScenario;
     return dialogArray.map((line: DialogLineType) => (
       <div key={line.key}>
         <DialogLine
           actor={line.actor}
           lineKey={line.key}
-          focus={true}
+          focus={focusKey === line.key}
           text={line.text}
+          firstLineInDialog={currentScenario.firstLineKey === line.key}
         />
       </div>
     ));

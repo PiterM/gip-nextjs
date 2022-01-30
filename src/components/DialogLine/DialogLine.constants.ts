@@ -1,5 +1,9 @@
-export const KeyEnter = "Enter";
-export const KeyDelete = "Delete";
-export const KeyArrowUp = "ArrowUp";
-export const KeyArrowDown = "ArrowDown";
-export const KeyTab = "Tab";
+enum KEYS {
+    KeyEnter = "Enter",
+    KeyDelete = "Delete",
+    KeyArrowUp = "ArrowUp",
+    KeyArrowDown = "ArrowDown",
+    KeyTab = "Tab",
+}
+
+export default KEYS;
