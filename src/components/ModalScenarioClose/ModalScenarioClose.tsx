@@ -6,22 +6,30 @@ export interface ModalScenarioDeleteProps {
   open: boolean;
   scenario: ScenarioType | undefined;
   setOpen: (open: boolean) => void;
-  deleteScenarioHandler: (scenarioId: string) => void;
+  closeScenarioHandler: () => void;
+  saveScenarioHandler: () => void;
 }
 
 const ModalScenarioDelete: FC<ModalScenarioDeleteProps> = ({
   open,
   setOpen,
   scenario,
-  deleteScenarioHandler,
+  closeScenarioHandler,
+  saveScenarioHandler,
 }: ModalScenarioDeleteProps) => {
   if (!scenario) {
     return null;
   }
 
-  const confirmedDeleteScenario = () => {
+  const confirmedCloseScenario = () => {
     setOpen(false);
-    deleteScenarioHandler(scenario.id);
+    closeScenarioHandler();
+  };
+
+  const confirmedSaveScenario = () => {
+    setOpen(false);
+    saveScenarioHandler();
+    closeScenarioHandler();
   };
 
   return (
@@ -35,17 +43,17 @@ const ModalScenarioDelete: FC<ModalScenarioDeleteProps> = ({
       <Modal.Content>
         <Modal.Description>
           <p>
-            Czy na pewno chcesz usunąć scenariusz{" "}
-            <strong>"{scenario.title}"</strong>?
+            Czy na pewno chcesz zamknąć scenariusz{" "}
+            <strong>"{scenario.title}"</strong> bez zapisywania?
           </p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color="blue" onClick={() => setOpen(false)}>
-          Nie
+        <Button color="blue" onClick={confirmedSaveScenario}>
+          Zapisz zmiany
         </Button>
-        <Button onClick={confirmedDeleteScenario} color="red">
-          Tak
+        <Button onClick={confirmedCloseScenario} color="red">
+          Odrzuć zmiany
         </Button>
       </Modal.Actions>
     </Modal>

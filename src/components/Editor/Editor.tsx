@@ -36,7 +36,7 @@ const Editor: FC = () => {
             rows={2}
             onInput={setIntroHandler}
             value={intro}
-            placeholder=""
+            placeholder="intro..."
           />
         </div>
       </>

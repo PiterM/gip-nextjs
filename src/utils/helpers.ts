@@ -71,3 +71,8 @@ export const trimDialogSpaces = (data: ScenarioType): ScenarioType => {
   data.dialogArray = calculateDialogArray(data.dialog, data.firstLineKey);
   return data;
 };
+
+export const formattedDate = (date: Date) =>
+  `${new Date(date).toLocaleDateString("pl-PL")} ${new Date(
+    date
+  ).toLocaleTimeString("pl-PL")}`;

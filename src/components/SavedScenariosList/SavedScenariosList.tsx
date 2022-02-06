@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllScenarios, deleteScenario } from "../../http-client/HttpClient";
 import { closeEditor } from "../Editor/Scenario.actions";
+import { formattedDate } from "../../utils/helpers";
 import {
   getCurrentScenario,
   getScenariosList,
@@ -26,6 +27,9 @@ const SavedScenariosList: FC = () => {
   const [deletedScenario, setDeletedScenario] = useState<
     ScenarioType | undefined
   >(undefined);
+
+  const showNewUnsavedScenario =
+    currentScenario && !currentScenario.id && dirty;
 
   useEffect(() => {
     if (!dirty || scenarioDeleted) {
@@ -56,7 +60,10 @@ const SavedScenariosList: FC = () => {
     setModalOpen(true);
   };
 
-  if (!scenariosList || scenariosList.length === 0) {
+  if (
+    (!scenariosList || scenariosList.length === 0) &&
+    !showNewUnsavedScenario
+  ) {
     return null;
   }
 
@@ -67,17 +74,13 @@ const SavedScenariosList: FC = () => {
 
     return scenariosList.map((scenario: ScenarioType) => {
       const isCurrentScenario = currentScenario?.id === scenario.id;
-      const formattedDate = `${new Date(scenario.createDate).toLocaleDateString(
-        "pl-PL"
-      )} ${new Date(scenario.createDate).toLocaleTimeString("pl-PL")}`;
-
       return (
         <li
           key={scenario.id}
           className={isCurrentScenario ? classes["current-scenario"] : ""}
         >
           <div>
-            [{formattedDate}]{" "}
+            [{formattedDate(scenario.createDate)}]{" "}
             <button
               className={`uk-button-danger ${classes["button-delete"]}`}
               onClick={deleteModalHandler.bind(null, scenario)}
@@ -86,7 +89,7 @@ const SavedScenariosList: FC = () => {
             </button>
           </div>
           <a onClick={openScenarioHandler.bind(null, scenario.id)}>
-            <div>{scenario.title}</div>
+            <div className={classes["scenario-title"]}>{scenario.title}</div>
           </a>
         </li>
       );
@@ -96,7 +99,20 @@ const SavedScenariosList: FC = () => {
   return (
     <>
       <p className={classes["scenarios-header"]}>Gerwazeniek i Protazeniek</p>
-      <ol className={classes["scenarios-list"]}>{renderAllScenarios()}</ol>
+      <ol className={classes["scenarios-list"]}>
+        {showNewUnsavedScenario && (
+          <li>
+            <div>
+              [{formattedDate(currentScenario.createDate)}]{" "}
+              <strong>[NOWY!]</strong>
+            </div>
+            <div className={classes["scenario-title"]}>
+              {currentScenario.title}
+            </div>
+          </li>
+        )}
+        {renderAllScenarios()}
+      </ol>
       <ModalScenarioDelete
         open={modalOpen}
         setOpen={setModalOpen}

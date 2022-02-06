@@ -1,6 +1,12 @@
 import { ScenarioType } from "../components/Editor/Scenario.state";
 
 export const saveCurrentScenario = async (currentScenario: ScenarioType) => {
+  if (!currentScenario.title) {
+    currentScenario = {
+      ...currentScenario,
+      title: "(nowy)",
+    };
+  }
   if (currentScenario.id) {
     await fetch("/api/scenario", {
       method: "PUT",

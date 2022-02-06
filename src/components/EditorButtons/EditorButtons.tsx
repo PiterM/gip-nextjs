@@ -1,16 +1,21 @@
-import { FC } from "react";
-import {
-  saveCurrentScenario,
-  getAllScenarios,
-} from "../../http-client/HttpClient";
+import { FC, useState } from "react";
+import { saveCurrentScenario } from "../../http-client/HttpClient";
 import { useSelector } from "react-redux";
 import { getCurrentScenario } from "../Editor/Scenario.selectors";
 import { useDispatch } from "react-redux";
-import { setScenarioId, setDirty } from "../Editor/Scenario.actions";
+import {
+  closeEditor,
+  setScenarioId,
+  setDirty,
+} from "../Editor/Scenario.actions";
+import classes from "./EditorButtons.module.sass";
+import ModalScenarioClose from "../ModalScenarioClose/ModalScenarioClose";
 
 const EditorButtons: FC = () => {
   const currentScenario = useSelector(getCurrentScenario);
   const dispatch = useDispatch();
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const saveScenarioHandler = async () => {
     const scenarioId =
@@ -19,14 +24,41 @@ const EditorButtons: FC = () => {
     dispatch(setDirty(false));
   };
 
+  const closeScenarioHandler = () => dispatch(closeEditor());
+
+  const confirmCloseHandler = () => {
+    !!currentScenario?.dirty && setModalOpen(true);
+    !currentScenario?.dirty && closeScenarioHandler();
+  };
+
   return (
-    <button
-      className="uk-button uk-button-primary"
-      onClick={saveScenarioHandler}
-      disabled={!currentScenario?.dirty}
-    >
-      Zapisz
-    </button>
+    <>
+      <div className={classes["save-button"]}>
+        <button
+          className={`uk-button uk-button-primary`}
+          onClick={saveScenarioHandler}
+          disabled={!currentScenario?.dirty}
+        >
+          Zapisz
+        </button>
+      </div>
+      <div className={classes["close-button"]}>
+        <button
+          className={`uk-button uk-button-danger ${classes["close-button"]}`}
+          onClick={confirmCloseHandler}
+          disabled={!currentScenario?.type}
+        >
+          Zamknij
+        </button>
+      </div>
+      <ModalScenarioClose
+        open={modalOpen}
+        setOpen={setModalOpen}
+        scenario={currentScenario}
+        closeScenarioHandler={closeScenarioHandler}
+        saveScenarioHandler={saveScenarioHandler}
+      />
+    </>
   );
 };
 

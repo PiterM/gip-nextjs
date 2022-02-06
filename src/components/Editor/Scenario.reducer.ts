@@ -34,6 +34,7 @@ export const scenarioReducer = (
       return {
         ...action.payload,
         _id: undefined,
+        dirty: false,
       };
     case ACTION_TYPES.NEW_SCENARIO:
       const scenarioType = action.payload;
@@ -52,7 +53,7 @@ export const scenarioReducer = (
             id: null,
             createDate: new Date(),
             type: scenario.type,
-            title: scenario.name,
+            title: "",
             intro: "",
             focusKey: -1,
             firstLineKey: 0,
