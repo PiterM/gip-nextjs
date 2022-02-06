@@ -23,10 +23,21 @@ const Editor: FC = () => {
     return (
       <>
         <div className={classes["dialog-title"]}>
-          <input className="uk-input" value={title} onInput={setTitleHandler} placeholder="tytuł..." />
+          <input
+            className="uk-input"
+            value={title}
+            onInput={setTitleHandler}
+            placeholder="tytuł..."
+          />
         </div>
         <div className={classes["dialog-intro"]}>
-          <textarea className="uk-textarea" rows={2} onInput={setIntroHandler} value={intro} placeholder="intro..." />
+          <textarea
+            className="uk-textarea"
+            rows={2}
+            onInput={setIntroHandler}
+            value={intro}
+            placeholder=""
+          />
         </div>
       </>
     );
@@ -47,8 +58,10 @@ const Editor: FC = () => {
     ));
   };
 
-  const setTitleHandler = (event: FormEvent<HTMLInputElement>) => dispatch(setDialogTitle((event.target as any).value));
-  const setIntroHandler = (event: FormEvent<HTMLTextAreaElement>) => dispatch(setDialogIntro((event.target as any).value));
+  const setTitleHandler = (event: FormEvent<HTMLInputElement>) =>
+    dispatch(setDialogTitle((event.target as any).value));
+  const setIntroHandler = (event: FormEvent<HTMLTextAreaElement>) =>
+    dispatch(setDialogIntro((event.target as any).value));
 
   return (
     <section className={classes.scenario}>

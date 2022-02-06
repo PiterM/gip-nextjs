@@ -13,7 +13,7 @@ const ScenariosMenu: FC = () => {
         <p>{scenario.name}</p>
         <div>
           <button
-            className="uk-button uk-button-primary"
+            className="uk-button uk-button-secondary"
             onClick={() => newScenarioHandler(scenario.type)}
           >
             Nowy scenariusz
@@ -27,7 +27,9 @@ const ScenariosMenu: FC = () => {
     dispatch(newScenario(scenarioType));
   };
 
-  return <ul className={classes["scenarios-list"]}>{renderScenariosTypes()}</ul>;
+  return (
+    <ul className={classes["scenarios-list"]}>{renderScenariosTypes()}</ul>
+  );
 };
 
 export default ScenariosMenu;

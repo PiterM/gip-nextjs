@@ -28,6 +28,13 @@ export const scenarioReducer = (
   action: ScenarioActions
 ) => {
   switch (action.type) {
+    case ACTION_TYPES.CLOSE_EDITOR:
+      return initialScenarioState;
+    case ACTION_TYPES.OPEN_SCENARIO:
+      return {
+        ...action.payload,
+        _id: undefined,
+      };
     case ACTION_TYPES.NEW_SCENARIO:
       const scenarioType = action.payload;
       for (const scenario of scenariosJson.scenariosTypes) {
@@ -232,10 +239,7 @@ export const scenarioReducer = (
       newDialog = { ...state.dialog };
       delete newDialog[lineKey];
       newDialog[lineKey] = line;
-      dialogArray = calculateDialogArray(
-        newDialog,
-        state.firstLineKey
-      );
+      dialogArray = calculateDialogArray(newDialog, state.firstLineKey);
 
       return {
         ...state,
@@ -244,7 +248,17 @@ export const scenarioReducer = (
           [lineKey]: line,
         },
         dialogArray,
-        dirty: true
+        dirty: true,
+      };
+    case ACTION_TYPES.SET_SCENARIO_ID:
+      return {
+        ...state,
+        id: String(action.payload),
+      };
+    case ACTION_TYPES.SET_DIRTY:
+      return {
+        ...state,
+        dirty: Boolean(action.payload),
       };
     default:
       return state;

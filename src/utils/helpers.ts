@@ -1,6 +1,7 @@
 import {
   DialogLineType,
   DialogType,
+  ScenarioType,
 } from "../components/Editor/Scenario.state";
 import scenariosJson from "../config/scenarios.json";
 
@@ -59,4 +60,14 @@ export const calculateDialogArray = (
     iteratorKey = dialog[iteratorKey].next;
   }
   return dialogArray;
+};
+
+export const trimDialogSpaces = (data: ScenarioType): ScenarioType => {
+  data.title = data.title.trim();
+  data.intro = data.intro.trim();
+  Object.keys(data.dialog).forEach((key: string) => {
+    data.dialog[key].text = data.dialog[key].text.trim();
+  });
+  data.dialogArray = calculateDialogArray(data.dialog, data.firstLineKey);
+  return data;
 };

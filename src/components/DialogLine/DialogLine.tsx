@@ -11,7 +11,7 @@ import {
   setFocusOnPreviousLine,
   switchToNextActor,
   switchToPreviousActor,
-  switchToDescriptionLine
+  switchToDescriptionLine,
 } from "../Editor/Scenario.actions";
 true;
 export interface DialogLineProps {
