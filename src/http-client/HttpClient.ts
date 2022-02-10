@@ -1,4 +1,5 @@
 import { ScenarioType } from "../components/Editor/Scenario.state";
+import { showErrorToast, showSuccessToast } from "../utils/helpers";
 
 export const saveCurrentScenario = async (currentScenario: ScenarioType) => {
   if (!currentScenario.title) {
@@ -8,42 +9,61 @@ export const saveCurrentScenario = async (currentScenario: ScenarioType) => {
     };
   }
   if (currentScenario.id) {
-    await fetch("/api/scenario", {
-      method: "PUT",
-      body: JSON.stringify({
-        ...currentScenario,
-      }),
-    });
-    return;
+    try {
+      const response = await fetch("/api/scenario", {
+        method: "PUT",
+        body: JSON.stringify({
+          ...currentScenario,
+        }),
+      });
+      console.log("response");
+      showSuccessToast("Zapisane!");
+      return;
+    } catch (e) {
+      showErrorToast((e as any).message);
+    }
   } else {
-    const response = await fetch("/api/scenario", {
-      method: "POST",
-      body: JSON.stringify(currentScenario),
-    });
-
-    const data = await response.json();
-    await fetch("/api/scenario", {
-      method: "PUT",
-      body: JSON.stringify({
-        ...currentScenario,
-        id: data.id,
-      }),
-    });
-    return data.id;
+    try {
+      let response = await fetch("/api/scenario", {
+        method: "POST",
+        body: JSON.stringify(currentScenario),
+      });
+      const data = await response.json();
+      response = await fetch("/api/scenario", {
+        method: "PUT",
+        body: JSON.stringify({
+          ...currentScenario,
+          id: data.id,
+        }),
+      });
+      showSuccessToast("Zapisane!");
+      return data.id;
+    } catch (e) {
+      showErrorToast((e as any).message);
+    }
   }
 };
 
 export const deleteScenario = async (scenarioId: string) => {
-  const response = await fetch("api/scenario", {
-    method: "DELETE",
-    body: scenarioId,
-  });
-  return await response.json();
+  try {
+    const response = await fetch("api/scenario", {
+      method: "DELETE",
+      body: scenarioId,
+    });
+    showSuccessToast("Usunięte!");
+    return await response.json();
+  } catch (e) {
+    showErrorToast((e as any).message);
+  }
 };
 
 export const getAllScenarios = async (scenarioType: string) => {
-  const response = await fetch(`/api/scenarios/${scenarioType}`, {
-    method: "GET",
-  });
-  return await response.json();
+  try {
+    const response = await fetch(`/api/scenarios/${scenarioType}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (e) {
+    showErrorToast((e as any).message);
+  }
 };

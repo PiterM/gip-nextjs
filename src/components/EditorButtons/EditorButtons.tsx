@@ -10,12 +10,14 @@ import {
 } from "../Editor/Scenario.actions";
 import classes from "./EditorButtons.module.sass";
 import ModalScenarioClose from "../ModalScenarioClose/ModalScenarioClose";
+import DocxGenerator from "../DocxGenerator/DocxGenerator";
 
 const EditorButtons: FC = () => {
   const currentScenario = useSelector(getCurrentScenario);
   const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [docxGeneratorTriggered, setDocxGeneratorTriggered] = useState(false);
 
   const saveScenarioHandler = async () => {
     const scenarioId =
@@ -44,11 +46,20 @@ const EditorButtons: FC = () => {
       </div>
       <div className={classes["close-button"]}>
         <button
-          className={`uk-button uk-button-danger ${classes["close-button"]}`}
+          className={`uk-button uk-button-danger`}
           onClick={confirmCloseHandler}
           disabled={!currentScenario?.type}
         >
           Zamknij
+        </button>
+      </div>
+      <div className={classes["docx-button"]}>
+        <button
+          className={`uk-button uk-button-secondary`}
+          onClick={() => setDocxGeneratorTriggered(true)}
+          disabled={!currentScenario?.type}
+        >
+          DOCX
         </button>
       </div>
       <ModalScenarioClose
@@ -58,6 +69,13 @@ const EditorButtons: FC = () => {
         closeScenarioHandler={closeScenarioHandler}
         saveScenarioHandler={saveScenarioHandler}
       />
+      {currentScenario?.type && docxGeneratorTriggered && (
+        <DocxGenerator
+          fileName={currentScenario.title || "(nowy)"}
+          scenario={currentScenario}
+          downloadComplete={() => setDocxGeneratorTriggered(false)}
+        />
+      )}
     </>
   );
 };

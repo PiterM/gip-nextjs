@@ -4,6 +4,7 @@ import {
   ScenarioType,
 } from "../components/Editor/Scenario.state";
 import scenariosJson from "../config/scenarios.json";
+import { toast } from "react-toastify";
 
 export const findActorPartner = (scenarioType: string, partnerName: string) => {
   let nextActor;
@@ -76,3 +77,19 @@ export const formattedDate = (date: Date) =>
   `${new Date(date).toLocaleDateString("pl-PL")} ${new Date(
     date
   ).toLocaleTimeString("pl-PL")}`;
+
+const toastParams = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+};
+
+export const showSuccessToast = (text: string) =>
+  toast.success(text, toastParams as any);
+
+export const showErrorToast = (text: string) =>
+  toast.error(`Error! ${text}`, toastParams as any);

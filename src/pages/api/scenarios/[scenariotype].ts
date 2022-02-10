@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ScenarioType } from "../../../components/Editor/Scenario.state";
-import { getAllScenarios } from "../../../utils/mongodbHandler";
+import { getAllScenarios } from "../../../utils/mongodb-handler";
 
 export interface ScenariosList {
   scenarios: ScenarioType[];

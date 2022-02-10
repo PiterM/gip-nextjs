@@ -3,7 +3,7 @@ import clientPromise from "./mongodb";
 import { trimDialogSpaces } from "./helpers";
 import { ScenarioType } from "../components/Editor/Scenario.state";
 
-export const getAllScenarios = async (scenarioType: string) => {
+export const getAllScenarios = async () => {
   const cursor = (await getDbCollection()).find().sort({ createDate: -1 });
   return cursor.map((doc: ScenarioType) => doc).toArray();
 };

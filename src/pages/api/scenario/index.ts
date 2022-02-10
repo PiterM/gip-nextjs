@@ -1,11 +1,9 @@
-import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
-import clientPromise from "../../../utils/mongodb";
 import {
   insertScenario,
   updateScenario,
   deleteScenario,
-} from "../../../utils/mongodbHandler";
+} from "../../../utils/mongodb-handler";
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,22 +23,35 @@ export default async function handler(
 }
 
 const post = async (req: NextApiRequest, res: NextApiResponse) => {
-  const result = insertScenario(req.body);
-  res.status(200).json({ id: (await result).insertedId });
-  return res;
+  try {
+    const result = insertScenario(req.body);
+    res.status(200).json({ id: (await result).insertedId });
+    return res;
+  } catch (e) {
+    res.status(500);
+    return res;
+  }
 };
 
 const put = async (req: NextApiRequest, res: NextApiResponse) => {
-  const client = await clientPromise;
-  const body = JSON.parse(req.body);
-  updateScenario(body);
-
-  res.status(200).json({ message: "Saved" });
-  return res;
+  try {
+    const body = JSON.parse(req.body);
+    updateScenario(body);
+    res.status(200).json({ message: "Saved" });
+    return res;
+  } catch (e) {
+    res.status(500);
+    return res;
+  }
 };
 
 const del = async (req: NextApiRequest, res: NextApiResponse) => {
-  deleteScenario(String(req.body));
-  res.status(200).json({ message: "Deleted" });
-  return res;
+  try {
+    deleteScenario(String(req.body));
+    res.status(200).json({ message: "Deleted" });
+    return res;
+  } catch (e) {
+    res.status(500);
+    return res;
+  }
 };
