@@ -13,8 +13,11 @@ import {
   loadScenario,
 } from "../Editor/ScenariosList.actions";
 import classes from "./SavedScenariosList.module.sass";
-import ModalScenarioDelete from "../ModalScenarioDelete/ModalScenarioDelete";
+import ModalScenarioDelete from "../Modal/ModalScenarioDelete";
+import ModalScenarioSwitch from "../Modal/ModalScenarioSwitch";
+import { saveCurrentScenario } from "../../http-client/HttpClient";
 import "uikit/dist/js/uikit.min";
+import scenariosJson from "../../config/scenarios.json";
 
 const SavedScenariosList: FC = () => {
   const dispatch = useDispatch();
@@ -28,23 +31,46 @@ const SavedScenariosList: FC = () => {
     ScenarioType | undefined
   >(undefined);
 
+  const [openModalScenarioSwitch, setOpenModalScenarioSwitch] =
+    useState<boolean>(false);
+  const [openingScenarioId, setOpeningScenarioId] = useState<string>("");
+
   const showNewUnsavedScenario =
-    currentScenario && !currentScenario.id && dirty;
+    currentScenario && !currentScenario.saved && dirty;
 
   useEffect(() => {
-    if (!dirty || scenarioDeleted) {
-      getAllScenarios("gip").then((data) => dispatch(setScenariosList(data)));
-      setScenarioDeleted(false);
+    let timeout: any;
+    if (!dirty || scenarioDeleted || !openModalScenarioSwitch) {
+      timeout = setTimeout(() => {
+        getAllScenarios("gip").then((data) => dispatch(setScenariosList(data)));
+        setScenarioDeleted(false);
+      }, 300);
     }
-  }, [dirty, scenarioDeleted]);
+    return () => timeout && clearTimeout(timeout);
+  }, [dirty, scenarioDeleted, openModalScenarioSwitch, dispatch]);
 
   useEffect(() => {
     setModalOpen(true);
   }, [deletedScenario?.id]);
 
   const openScenarioHandler = (scenarioId: string) => {
-    const isCurrentScenario = currentScenario?.id === scenarioId;
-    !isCurrentScenario && dispatch(loadScenario(scenarioId));
+    if (dirty) {
+      setOpeningScenarioId(scenarioId);
+      setOpenModalScenarioSwitch(true);
+    } else {
+      closeScenarioHandler(scenarioId);
+    }
+  };
+
+  const closeScenarioHandler = (scenarioId?: string) => {
+    dispatch(loadScenario(scenarioId!));
+    setOpenModalScenarioSwitch(false);
+  };
+
+  const saveScenarioHandler = async (scenarioId?: string) => {
+    currentScenario && (await saveCurrentScenario(currentScenario));
+    dispatch(loadScenario(scenarioId!));
+    setOpenModalScenarioSwitch(false);
   };
 
   const deleteScenarioHandler = (scenarioId: string) => {
@@ -96,12 +122,16 @@ const SavedScenariosList: FC = () => {
     });
   };
 
+  const scenarioTitle = scenariosJson.scenariosTypes.find(
+    (scenario) => scenario.type === "gip"
+  )?.name;
+
   return (
     <>
-      <p className={classes["scenarios-header"]}>Gerwazeniek i Protazeniek</p>
+      <p className={classes["scenarios-header"]}>{scenarioTitle}</p>
       <ol className={classes["scenarios-list"]}>
         {showNewUnsavedScenario && (
-          <li>
+          <li className={classes["current-scenario"]}>
             <div>
               [{formattedDate(currentScenario.createDate)}]{" "}
               <strong>[NOWY!]</strong>
@@ -118,6 +148,14 @@ const SavedScenariosList: FC = () => {
         setOpen={setModalOpen}
         scenario={deletedScenario}
         deleteScenarioHandler={deleteScenarioHandler}
+      />
+      <ModalScenarioSwitch
+        open={openModalScenarioSwitch}
+        setOpen={setOpenModalScenarioSwitch}
+        openingScenarioId={openingScenarioId}
+        scenario={currentScenario}
+        closeScenarioHandler={closeScenarioHandler}
+        saveScenarioHandler={saveScenarioHandler}
       />
     </>
   );

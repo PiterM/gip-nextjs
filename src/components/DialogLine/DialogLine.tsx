@@ -11,9 +11,12 @@ import {
   setFocusOnPreviousLine,
   switchToNextActor,
   switchToPreviousActor,
-  switchToDescriptionLine,
 } from "../Editor/Scenario.actions";
-true;
+import {
+  defaultTextareaRows,
+  oneTextareaRowInPx,
+} from "../../constants/constants";
+
 export interface DialogLineProps {
   actor: ActorType;
   lineKey: number;
@@ -36,6 +39,18 @@ const DialogLine: FC<DialogLineProps> = ({
   useEffect(() => {
     focus && textAreaRef?.current?.focus();
   }, [focus]);
+
+  useEffect(() => {
+    if (
+      textAreaRef.current &&
+      textAreaRef.current.scrollHeight >
+        defaultTextareaRows * oneTextareaRowInPx
+    ) {
+      textAreaRef.current.rows = Math.ceil(
+        textAreaRef.current.scrollHeight / oneTextareaRowInPx
+      );
+    }
+  }, []);
 
   const onKeyDownHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.code === KEYS.KeyEnter && event.ctrlKey) {
@@ -79,7 +94,7 @@ const DialogLine: FC<DialogLineProps> = ({
       <textarea
         ref={textAreaRef}
         className={`uk-textarea line ${classes.line}`}
-        rows={2}
+        rows={defaultTextareaRows}
         onKeyDown={onKeyDownHandler}
         onInput={onInputHandler}
         value={text}

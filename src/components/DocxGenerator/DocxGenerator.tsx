@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Document, Packer, Paragraph, HeadingLevel, TextRun } from "docx";
 import { formattedDate } from "../../utils/helpers";
 import { DialogLineType, ScenarioType } from "../Editor/Scenario.state";
+import scenariosJson from "../../config/scenarios.json";
 
 export interface DocxGeneratorProps {
   scenario: ScenarioType;
@@ -53,12 +54,17 @@ const DocxGenerator: FC<DocxGeneratorProps> = ({
   const createActorText = (text: string) => createParagraph(text);
   const createEmptyLine = () => createParagraph("");
 
+  const scenarioTitle = scenariosJson.scenariosTypes.find(
+    (scenario) => scenario.type === "gip"
+  )?.name;
+
   const doc = new Document({
     title: scenario.title,
     description: scenario.intro,
     sections: [
       {
         children: [
+          createParagraph(scenarioTitle!),
           new Paragraph({
             text: scenario.title,
             heading: HeadingLevel.TITLE,
@@ -66,13 +72,21 @@ const DocxGenerator: FC<DocxGeneratorProps> = ({
           createEmptyLine(),
           createParagraph(scenario.intro),
           createEmptyLine(),
+          createEmptyLine(),
           ...dialog
             .map((line) => {
               const arr: Paragraph[] = [];
 
-              line.actorName && arr.push(createActorName(line.actorName));
-              arr.push(createActorText(line.text));
-              arr.push(createEmptyLine());
+              if (line.actorName) {
+                arr.push(createActorName(line.actorName));
+                arr.push(createActorText(line.text));
+                arr.push(createEmptyLine());
+              } else {
+                arr.push(createEmptyLine());
+                arr.push(createActorText(line.text));
+                arr.push(createEmptyLine());
+                arr.push(createEmptyLine());
+              }
 
               return arr;
             })

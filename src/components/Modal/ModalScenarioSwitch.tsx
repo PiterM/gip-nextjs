@@ -5,24 +5,36 @@ import { Button, Modal } from "semantic-ui-react";
 export interface ModalScenarioDeleteProps {
   open: boolean;
   scenario: ScenarioType | undefined;
+  openingScenarioId: string;
   setOpen: (open: boolean) => void;
-  deleteScenarioHandler: (scenarioId: string) => void;
+  closeScenarioHandler: (scenarioId?: string) => void;
+  saveScenarioHandler: () => void;
 }
 
 const ModalScenarioDelete: FC<ModalScenarioDeleteProps> = ({
   open,
   setOpen,
   scenario,
-  deleteScenarioHandler,
+  openingScenarioId,
+  closeScenarioHandler,
+  saveScenarioHandler,
 }: ModalScenarioDeleteProps) => {
   if (!scenario) {
     return null;
   }
 
-  const confirmedDeleteScenario = () => {
+  const confirmedCloseScenario = () => {
     setOpen(false);
-    deleteScenarioHandler(scenario.id);
+    closeScenarioHandler(openingScenarioId);
   };
+
+  const confirmedSaveScenario = () => {
+    setOpen(false);
+    saveScenarioHandler();
+    closeScenarioHandler(openingScenarioId);
+  };
+
+  const confirmedCancel = () => setOpen(false);
 
   return (
     <Modal
@@ -35,18 +47,19 @@ const ModalScenarioDelete: FC<ModalScenarioDeleteProps> = ({
       <Modal.Content>
         <Modal.Description>
           <p>
-            Czy na pewno chcesz usunąć scenariusz{" "}
-            <strong>"{scenario.title}"</strong>?
+            Czy chcesz zapisać scenariusz{" "}
+            <strong>{`"${scenario.title}"`}</strong>?
           </p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color="blue" onClick={() => setOpen(false)}>
-          Nie
-        </Button>
-        <Button onClick={confirmedDeleteScenario} color="red">
+        <Button color="blue" onClick={confirmedSaveScenario}>
           Tak
         </Button>
+        <Button onClick={confirmedCloseScenario} color="red">
+          Nie
+        </Button>
+        <Button onClick={confirmedCancel}>Anuluj</Button>
       </Modal.Actions>
     </Modal>
   );

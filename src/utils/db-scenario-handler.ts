@@ -29,5 +29,5 @@ export const getDbCollection = async () => {
   const client = await clientPromise;
   return await client
     .db(String(process.env.MONGODB_DB_NAME))
-    .collection(String(process.env.MONGODB_COLLECTION_NAME));
+    .collection(String(process.env.MONGODB_SCENARIOS_COLLECTION_NAME));
 };

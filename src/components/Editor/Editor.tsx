@@ -1,19 +1,59 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useRef, useEffect, useCallback } from "react";
 import { getCurrentScenario } from "./Scenario.selectors";
+import { saveCurrentScenario } from "../../http-client/HttpClient";
 import { useDispatch, useSelector } from "react-redux";
 import { setDialogTitle, setDialogIntro } from "./Scenario.actions";
 import classes from "./Editor.module.sass";
 import { DialogLineType } from "./Scenario.state";
 import DialogLine from "../DialogLine/DialogLine";
+import Image from "next/image";
+import {
+  defaultTextareaRows,
+  oneTextareaRowInPx,
+} from "../../constants/constants";
+import { setScenarioId, setDirty } from "../Editor/Scenario.actions";
 
 const Editor: FC = () => {
   const currentScenario = useSelector(getCurrentScenario);
+  const currentDialogLength =
+    currentScenario && Object.keys(currentScenario.dialog).length;
+
   const dispatch = useDispatch();
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const saveScenario = useCallback(async () => {
+    const scenarioId =
+      currentScenario && (await saveCurrentScenario(currentScenario, false));
+    scenarioId && dispatch(setScenarioId(scenarioId));
+    dispatch(setDirty(false));
+  }, [currentScenario, dispatch]);
+
+  useEffect(() => {
+    if (
+      textAreaRef.current &&
+      textAreaRef.current.scrollHeight >
+        defaultTextareaRows * oneTextareaRowInPx
+    ) {
+      textAreaRef.current.rows = Math.ceil(
+        textAreaRef.current.scrollHeight / oneTextareaRowInPx
+      );
+    }
+  }, [currentScenario]);
+
+  useEffect(() => {
+    currentDialogLength && currentDialogLength > 1 && saveScenario();
+  }, [currentDialogLength]);
 
   if (!currentScenario || !currentScenario.type) {
     return (
       <div className={classes.logo}>
-        <img src="images/gip-logo.png" alt="GIP Editor" />
+        <Image
+          width="400"
+          height="200"
+          src="/images/gip-logo.png"
+          alt="GIP Editor"
+        />
       </div>
     );
   }
@@ -32,8 +72,9 @@ const Editor: FC = () => {
         </div>
         <div className={classes["dialog-intro"]}>
           <textarea
+            ref={textAreaRef}
             className="uk-textarea"
-            rows={2}
+            rows={defaultTextareaRows}
             onInput={setIntroHandler}
             value={intro}
             placeholder="intro..."

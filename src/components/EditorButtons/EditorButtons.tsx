@@ -9,7 +9,7 @@ import {
   setDirty,
 } from "../Editor/Scenario.actions";
 import classes from "./EditorButtons.module.sass";
-import ModalScenarioClose from "../ModalScenarioClose/ModalScenarioClose";
+import ModalScenarioClose from "../Modal/ModalScenarioClose";
 import DocxGenerator from "../DocxGenerator/DocxGenerator";
 
 const EditorButtons: FC = () => {

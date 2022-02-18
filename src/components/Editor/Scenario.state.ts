@@ -21,6 +21,7 @@ export interface ScenarioType {
   title: string;
   createDate: Date;
   type: string;
+  saved: boolean;
   intro: string;
   dialog: DialogType;
   dialogArray: DialogLineType[];

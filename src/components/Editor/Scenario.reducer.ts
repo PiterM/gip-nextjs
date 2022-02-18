@@ -15,6 +15,7 @@ const initialScenarioState = {
   type: "",
   title: "",
   intro: "",
+  saved: false,
   focusKey: -1,
   firstLineKey: 0,
   nextFreeKey: 0,
@@ -50,9 +51,10 @@ export const scenarioReducer = (
           };
 
           return {
-            id: null,
+            id: "",
             createDate: new Date(),
             type: scenario.type,
+            saved: false,
             title: "",
             intro: "",
             focusKey: -1,
@@ -67,7 +69,7 @@ export const scenarioReducer = (
         }
       }
     case ACTION_TYPES.ADD_LINE_AFTER_CURRENT_LINE:
-      const { id, createDate, title, intro, type, nextFreeKey } = state;
+      const { id, createDate, title, intro, type, nextFreeKey, saved } = state;
       let dialog = state.dialog;
       const currentKey = Number(action.payload);
       const currentLine = dialog[currentKey];
@@ -103,6 +105,7 @@ export const scenarioReducer = (
         title,
         intro,
         type,
+        saved,
         firstLineKey,
         focusKey: nextFreeKey,
         nextFreeKey: nextFreeKey + 1,
@@ -255,6 +258,7 @@ export const scenarioReducer = (
       return {
         ...state,
         id: String(action.payload),
+        saved: true,
       };
     case ACTION_TYPES.SET_DIRTY:
       return {

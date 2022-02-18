@@ -3,7 +3,7 @@ import {
   insertScenario,
   updateScenario,
   deleteScenario,
-} from "../../../utils/mongodb-handler";
+} from "../../../utils/db-scenario-handler";
 
 export default async function handler(
   req: NextApiRequest,

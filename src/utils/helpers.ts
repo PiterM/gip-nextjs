@@ -5,6 +5,7 @@ import {
 } from "../components/Editor/Scenario.state";
 import scenariosJson from "../config/scenarios.json";
 import { toast } from "react-toastify";
+import { hash } from "bcryptjs";
 
 export const findActorPartner = (scenarioType: string, partnerName: string) => {
   let nextActor;
@@ -74,9 +75,9 @@ export const trimDialogSpaces = (data: ScenarioType): ScenarioType => {
 };
 
 export const formattedDate = (date: Date) =>
-  `${new Date(date).toLocaleDateString("pl-PL")} ${new Date(
-    date
-  ).toLocaleTimeString("pl-PL")}`;
+  `${new Date(date).toLocaleDateString("pl-PL")} ${new Date(date)
+    .toLocaleTimeString("pl-PL")
+    .replaceAll(":", ".")}`;
 
 const toastParams = {
   position: "bottom-right",
@@ -93,3 +94,6 @@ export const showSuccessToast = (text: string) =>
 
 export const showErrorToast = (text: string) =>
   toast.error(`Error! ${text}`, toastParams as any);
+
+export const hashPassword = async (password: string) =>
+  await hash(password, 12);

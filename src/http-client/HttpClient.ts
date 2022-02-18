@@ -1,23 +1,25 @@
 import { ScenarioType } from "../components/Editor/Scenario.state";
 import { showErrorToast, showSuccessToast } from "../utils/helpers";
 
-export const saveCurrentScenario = async (currentScenario: ScenarioType) => {
+export const saveCurrentScenario = async (
+  currentScenario: ScenarioType,
+  showToast = true
+) => {
   if (!currentScenario.title) {
     currentScenario = {
       ...currentScenario,
       title: "(nowy)",
     };
   }
-  if (currentScenario.id) {
+  if (currentScenario.saved) {
     try {
-      const response = await fetch("/api/scenario", {
+      await fetch("/api/scenario", {
         method: "PUT",
         body: JSON.stringify({
           ...currentScenario,
         }),
       });
-      console.log("response");
-      showSuccessToast("Zapisane!");
+      showToast && showSuccessToast("Zapisane!");
       return;
     } catch (e) {
       showErrorToast((e as any).message);
@@ -34,9 +36,10 @@ export const saveCurrentScenario = async (currentScenario: ScenarioType) => {
         body: JSON.stringify({
           ...currentScenario,
           id: data.id,
+          saved: true,
         }),
       });
-      showSuccessToast("Zapisane!");
+      showToast && showSuccessToast("Zapisane!");
       return data.id;
     } catch (e) {
       showErrorToast((e as any).message);

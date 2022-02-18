@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ScenarioType } from "../../../components/Editor/Scenario.state";
-import { getAllScenarios } from "../../../utils/mongodb-handler";
+import { getAllScenarios } from "../../../utils/db-scenario-handler";
 
 export interface ScenariosList {
   scenarios: ScenarioType[];
@@ -21,8 +21,7 @@ const get = async (
   req: NextApiRequest,
   res: NextApiResponse<ScenariosList>
 ) => {
-  const scenarioType = String(req.query.scenariotype);
-  const scenarios = await getAllScenarios(scenarioType);
+  const scenarios = await getAllScenarios();
   res.status(200).json(scenarios);
   return res;
 };
