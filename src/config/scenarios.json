@@ -2,22 +2,22 @@
   "scenariosTypes": [
     {
       "type": "gip",
-      "name": "Gerwazeniek z Protazeńkiem",
+      "name": "Bajka Warmińska",
       "actors": [
         {
-          "name": "Gerwazeniek",
+          "name": "Ktoś",
           "priority": 1,
-          "partner": "Protazeniek"
+          "partner": "Tamten"
         },
         {
-          "name": "Protazeniek",
+          "name": "Tamten",
           "priority": 2,
-          "partner": "Gerwazeniek"
+          "partner": "Ktoś"
         },
         {
-          "name": "Tadziu",
+          "name": "Trzeci",
           "priority": 3,
-          "partner": "Gerwazeniek"
+          "partner": "Ktoś"
         }
       ]
     }

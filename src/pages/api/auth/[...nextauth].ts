@@ -7,7 +7,7 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {},
-      async authorize({ email, password }: any) {
+      async authorize({ email, password }: any, req: any) {
         const user = await findUserByEmail(email);
 
         if (!user) {
@@ -20,7 +20,7 @@ export default NextAuth({
           return null;
         }
 
-        return { email };
+        return user;
       },
     }),
   ],

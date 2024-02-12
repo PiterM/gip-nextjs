@@ -1,0 +1,25 @@
+{
+  "scenariosTypes": [
+    {
+      "type": "gip",
+      "name": "Gerwazeniek z Protazeńkiem",
+      "actors": [
+        {
+          "name": "Gerwazeniek",
+          "priority": 1,
+          "partner": "Protazeniek"
+        },
+        {
+          "name": "Protazeniek",
+          "priority": 2,
+          "partner": "Gerwazeniek"
+        },
+        {
+          "name": "Tadziu",
+          "priority": 3,
+          "partner": "Gerwazeniek"
+        }
+      ]
+    }
+  ]
+}

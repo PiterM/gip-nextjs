@@ -10,7 +10,7 @@ export const scenariosListReducer = (
 ) => {
   switch (action.type) {
     case ACTION_TYPES.SET_SCENARIOS_LIST:
-      const scenarios = action.payload;
+      const scenarios = action.payload ?? [];
       return [...scenarios];
     default:
       return state;

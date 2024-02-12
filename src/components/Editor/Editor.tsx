@@ -41,9 +41,9 @@ const Editor: FC = () => {
     }
   }, [currentScenario]);
 
-  useEffect(() => {
-    currentDialogLength && currentDialogLength > 1 && saveScenario();
-  }, [currentDialogLength]);
+  // useEffect(() => {
+  //   currentDialogLength && currentDialogLength > 1 && saveScenario();
+  // }, [currentDialogLength, saveScenario]);
 
   if (!currentScenario || !currentScenario.type) {
     return (

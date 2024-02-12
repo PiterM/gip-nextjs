@@ -6,12 +6,22 @@ $sidebar-width: 25vw
     width: $sidebar-width
     height: 100%
     background-color: #ddd
+    overflow-y: auto
+    transition: opacity 0.1s ease
 .sidebar-left
     left: 0
-    overflow-y: auto
+    opacity: 0
+.sidebar-left-hovered
+    left: 0
+    opacity: 1
 .sidebar-right
     right: 0
+    opacity: 0
+.sidebar-right-hovered
+    right: 0
+    opacity: 1
 .content
     margin: 0 $sidebar-width 3rem $sidebar-width
+    height: 100%
 .section
     margin: 1rem 2rem 2rem 2rem
