@@ -116,7 +116,7 @@ export const scenarioReducer = (
       };
 
       if (nextKey !== null && nextLine) {
-        newScenario.dialog[nextKey] = nextLine;
+        (newScenario.dialog as any)[nextKey] = nextLine;
       }
 
       (newScenario.dialogArray as DialogLineType[]) = calculateDialogArray(
