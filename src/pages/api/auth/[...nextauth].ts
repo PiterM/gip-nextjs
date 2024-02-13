@@ -20,7 +20,7 @@ export default NextAuth({
           return null;
         }
 
-        return user;
+        return { email } as any;
       },
     }),
   ],
