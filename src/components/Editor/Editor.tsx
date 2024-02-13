@@ -11,12 +11,12 @@ import {
   defaultTextareaRows,
   oneTextareaRowInPx,
 } from "../../constants/constants";
-import { setScenarioId, setDirty } from "../Editor/Scenario.actions";
+// import { setScenarioId, setDirty } from "../Editor/Scenario.actions";
 
 const Editor: FC = () => {
   const currentScenario = useSelector(getCurrentScenario);
-  const currentDialogLength =
-    currentScenario && Object.keys(currentScenario.dialog).length;
+  // const currentDialogLength =
+  //   currentScenario && Object.keys(currentScenario.dialog).length;
 
   const dispatch = useDispatch();
 
