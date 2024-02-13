@@ -28,6 +28,7 @@ export const scenarioReducer = (
   state: ScenarioType = initialScenarioState,
   action: ScenarioActions
 ) => {
+  let lineKey, newDialog, dialogArray;
   switch (action.type) {
     case ACTION_TYPES.CLOSE_EDITOR:
       return initialScenarioState;
@@ -76,7 +77,7 @@ export const scenarioReducer = (
       let firstLineKey = state.firstLineKey;
       let nextActor = findActorPartner(type, currentLine.actor.partner);
 
-      let newDialog = dialog;
+      newDialog = dialog;
       let nextLine;
       let nextKey = currentLine.next;
       if (nextKey !== null) {
@@ -167,7 +168,7 @@ export const scenarioReducer = (
       const newFirstLineKey =
         removedKey === firstLineKey ? nextLine?.key : firstLineKey;
 
-      let dialogArray = calculateDialogArray(
+      dialogArray = calculateDialogArray(
         dialog,
         newFirstLineKey === undefined ? null : newFirstLineKey
       );
@@ -222,7 +223,7 @@ export const scenarioReducer = (
       };
 
     case ACTION_TYPES.SET_FOCUS_ON_NEXT_LINE:
-      let lineKey = Number(action.payload);
+      lineKey = Number(action.payload);
       nextKey = state.dialog[lineKey].next;
       return {
         ...state,
