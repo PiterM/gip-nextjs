@@ -12,21 +12,21 @@ const Signup: NextPage = () => (
   </PageLayout>
 );
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const session = await getSession({ req: context.req });
 
-  if (session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: { session },
-  };
-};
+//   return {
+//     props: { session },
+//   };
+// };
 
 export default Signup;
