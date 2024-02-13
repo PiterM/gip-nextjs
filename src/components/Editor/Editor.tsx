@@ -22,12 +22,12 @@ const Editor: FC = () => {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const saveScenario = useCallback(async () => {
-    const scenarioId =
-      currentScenario && (await saveCurrentScenario(currentScenario, false));
-    scenarioId && dispatch(setScenarioId(scenarioId));
-    dispatch(setDirty(false));
-  }, [currentScenario, dispatch]);
+  // const saveScenario = useCallback(async () => {
+  //   const scenarioId =
+  //     currentScenario && (await saveCurrentScenario(currentScenario, false));
+  //   scenarioId && dispatch(setScenarioId(scenarioId));
+  //   dispatch(setDirty(false));
+  // }, [currentScenario, dispatch]);
 
   useEffect(() => {
     if (

@@ -10,14 +10,12 @@ import LogoutButton from "../LogoutButton/LogoutButton";
 const EditorLayout: FC = ({ children }) => {
   const [leftSidebarHover, setLeftSidebarHover] = useState<Boolean>(false);
   const [rightSidebarHover, setRightSidebarHover] = useState<Boolean>(false);
-  const [editorHover, setEditorHover] = useState<Boolean>(false);
 
   const leftSidebarHovered = () => setLeftSidebarHover(true);
   const rightSidebarHovered = () => setRightSidebarHover(true);
   const leftSidebarUnHovered = () => setLeftSidebarHover(false);
   const rightSidebarUnHovered = () => setRightSidebarHover(false);
   const editorHovered = () => {
-    console.log("tak");
     setLeftSidebarHover(false);
     setRightSidebarHover(false);
   };
