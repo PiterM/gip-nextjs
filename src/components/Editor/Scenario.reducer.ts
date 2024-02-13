@@ -28,7 +28,7 @@ export const scenarioReducer = (
   state: ScenarioType = initialScenarioState,
   action: ScenarioActions
 ) => {
-  let lineKey, newDialog, dialogArray, nextLine, firstLineKey, dialog;
+  let lineKey, newDialog, dialogArray, nextLine, firstLineKey, dialog, nextKey;
   switch (action.type) {
     case ACTION_TYPES.CLOSE_EDITOR:
       return initialScenarioState;
@@ -78,7 +78,7 @@ export const scenarioReducer = (
       let nextActor = findActorPartner(type, currentLine.actor.partner);
 
       newDialog = dialog;
-      let nextKey = currentLine.next;
+      nextKey = currentLine.next;
       if (nextKey !== null) {
         nextLine = newDialog[nextKey];
         nextLine.previous = nextFreeKey;
