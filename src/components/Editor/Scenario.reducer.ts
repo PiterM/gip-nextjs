@@ -28,7 +28,7 @@ export const scenarioReducer = (
   state: ScenarioType = initialScenarioState,
   action: ScenarioActions
 ) => {
-  let lineKey, newDialog, dialogArray;
+  let lineKey, newDialog, dialogArray, nextLine, firstLineKey, dialog;
   switch (action.type) {
     case ACTION_TYPES.CLOSE_EDITOR:
       return initialScenarioState;
@@ -71,14 +71,13 @@ export const scenarioReducer = (
       }
     case ACTION_TYPES.ADD_LINE_AFTER_CURRENT_LINE:
       const { id, createDate, title, intro, type, nextFreeKey, saved } = state;
-      let dialog = state.dialog;
+      dialog = state.dialog;
       const currentKey = Number(action.payload);
       const currentLine = dialog[currentKey];
-      let firstLineKey = state.firstLineKey;
+      firstLineKey = state.firstLineKey;
       let nextActor = findActorPartner(type, currentLine.actor.partner);
 
       newDialog = dialog;
-      let nextLine;
       let nextKey = currentLine.next;
       if (nextKey !== null) {
         nextLine = newDialog[nextKey];
