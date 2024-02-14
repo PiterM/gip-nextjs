@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Cookies from "js-cookie";
 import crypto from "crypto";
 import Head from "next/head";

@@ -5,7 +5,6 @@ import EditorButtons from "../EditorButtons/EditorButtons";
 import SavedScenariosList from "../SavedScenariosList/SavedScenariosList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import LogoutButton from "../LogoutButton/LogoutButton";
 
 const EditorLayout: FC = ({ children }) => {
   const [leftSidebarHover, setLeftSidebarHover] = useState<Boolean>(false);
@@ -48,7 +47,6 @@ const EditorLayout: FC = ({ children }) => {
         onMouseLeave={rightSidebarUnHovered}
       >
         <section className={classes.section}>
-          <LogoutButton />
           <ScenariosMenu />
         </section>
         <section className={classes.section}>
