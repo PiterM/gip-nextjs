@@ -7,17 +7,17 @@
         {
           "name": "Gędźbiarz",
           "priority": 1,
-          "partner": "Tamten"
+          "partner": "Wyrywny"
         },
         {
           "name": "Wyrywny",
           "priority": 2,
-          "partner": "Ktoś"
+          "partner": "Gędźbiarz"
         },
         {
           "name": "Trzeci do brydża",
           "priority": 3,
-          "partner": "Ktoś"
+          "partner": "Gędźbiarz"
         }
       ]
     }
