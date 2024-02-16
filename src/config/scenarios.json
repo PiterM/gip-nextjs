@@ -2,20 +2,20 @@
   "scenariosTypes": [
     {
       "type": "gip",
-      "name": "Bajka Warmińska",
+      "name": "Bajki z chodnika i przejścia dla pieszych",
       "actors": [
         {
-          "name": "Ktoś",
+          "name": "Gędźbiarz",
           "priority": 1,
           "partner": "Tamten"
         },
         {
-          "name": "Tamten",
+          "name": "Wyrywny",
           "priority": 2,
           "partner": "Ktoś"
         },
         {
-          "name": "Trzeci",
+          "name": "Trzeci do brydża",
           "priority": 3,
           "partner": "Ktoś"
         }
