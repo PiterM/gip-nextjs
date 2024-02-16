@@ -2,7 +2,7 @@
   "scenariosTypes": [
     {
       "type": "gip",
-      "name": "Bajki z chodnika i przejścia dla pieszych",
+      "name": "Bajki z chodnika",
       "actors": [
         {
           "name": "Gędźbiarz",
