@@ -54,12 +54,15 @@ const SavedScenariosList: FC = () => {
   }, [deletedScenario?.id]);
 
   const openScenarioHandler = (scenarioId: string) => {
-    if (dirty) {
-      setOpeningScenarioId(scenarioId);
-      setOpenModalScenarioSwitch(true);
-    } else {
-      closeScenarioHandler(scenarioId);
-    }
+    dispatch(closeEditor());
+    setTimeout(() => {
+      if (dirty) {
+        setOpeningScenarioId(scenarioId);
+        setOpenModalScenarioSwitch(true);
+      } else {
+        closeScenarioHandler(scenarioId);
+      }
+    }, 1);
   };
 
   const closeScenarioHandler = (scenarioId?: string) => {

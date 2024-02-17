@@ -1,6 +1,5 @@
 import { FC, FormEvent, useRef, useEffect, useCallback } from "react";
 import { getCurrentScenario } from "./Scenario.selectors";
-import { saveCurrentScenario } from "../../http-client/HttpClient";
 import { useDispatch, useSelector } from "react-redux";
 import { setDialogTitle, setDialogIntro } from "./Scenario.actions";
 import classes from "./Editor.module.sass";
