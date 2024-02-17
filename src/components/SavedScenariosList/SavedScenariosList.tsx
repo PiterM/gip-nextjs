@@ -54,26 +54,29 @@ const SavedScenariosList: FC = () => {
   }, [deletedScenario?.id]);
 
   const openScenarioHandler = (scenarioId: string) => {
-    dispatch(closeEditor());
-    setTimeout(() => {
-      if (dirty) {
-        setOpeningScenarioId(scenarioId);
-        setOpenModalScenarioSwitch(true);
-      } else {
-        closeScenarioHandler(scenarioId);
-      }
-    }, 1);
+    if (dirty) {
+      setOpeningScenarioId(scenarioId);
+      setOpenModalScenarioSwitch(true);
+    } else {
+      closeScenarioHandler(scenarioId);
+    }
   };
 
   const closeScenarioHandler = (scenarioId?: string) => {
-    dispatch(loadScenario(scenarioId!));
-    setOpenModalScenarioSwitch(false);
+    dispatch(closeEditor());
+    setTimeout(() => {
+      dispatch(loadScenario(scenarioId!));
+      setOpenModalScenarioSwitch(false);
+    }, 1);
   };
 
   const saveScenarioHandler = async (scenarioId?: string) => {
-    currentScenario && (await saveCurrentScenario(currentScenario));
-    dispatch(loadScenario(scenarioId!));
-    setOpenModalScenarioSwitch(false);
+    dispatch(closeEditor());
+    setTimeout(async () => {
+      currentScenario && (await saveCurrentScenario(currentScenario));
+      dispatch(loadScenario(scenarioId!));
+      setOpenModalScenarioSwitch(false);
+    }, 1);
   };
 
   const deleteScenarioHandler = (scenarioId: string) => {
