@@ -31,6 +31,7 @@ const Editor: FC = () => {
   useEffect(() => {
     if (
       textAreaRef.current &&
+      textAreaRef.current.value &&
       textAreaRef.current.scrollHeight >
         defaultTextareaRows * oneTextareaRowInPx
     ) {
@@ -38,7 +39,7 @@ const Editor: FC = () => {
         textAreaRef.current.scrollHeight / oneTextareaRowInPx
       );
     }
-  }, [currentScenario]);
+  }, []);
 
   // useEffect(() => {
   //   currentDialogLength && currentDialogLength > 1 && saveScenario();

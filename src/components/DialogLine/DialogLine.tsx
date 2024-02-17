@@ -43,6 +43,7 @@ const DialogLine: FC<DialogLineProps> = ({
   useEffect(() => {
     if (
       textAreaRef.current &&
+      textAreaRef.current.value.trim() &&
       textAreaRef.current.scrollHeight >
         defaultTextareaRows * oneTextareaRowInPx
     ) {
