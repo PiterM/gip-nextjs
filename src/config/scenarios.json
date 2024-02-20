@@ -7,17 +7,22 @@
         {
           "name": "Gędźbiarz",
           "priority": 1,
-          "partner": "Wyrywny"
+          "partner": "Marek"
         },
         {
-          "name": "Wyrywny",
+          "name": "Marek",
           "priority": 2,
-          "partner": "Gędźbiarz"
+          "partner": "Jarek"
         },
         {
-          "name": "Trzeci do brydża",
+          "name": "Jarek",
           "priority": 3,
-          "partner": "Gędźbiarz"
+          "partner": "Marek"
+        },
+        {
+          "name": "Wiesiu",
+          "priority": 4,
+          "partner": "Marek"
         }
       ]
     }
