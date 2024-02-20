@@ -40,15 +40,33 @@ const DocxGenerator: FC<DocxGeneratorProps> = ({
   };
 
   const createParagraph = (text: string) => {
-    return new Paragraph({
-      children: [
-        new TextRun({
-          text,
-          size: 32,
-          font: "Liberation Sans",
-        }),
-      ],
-    });
+    const paragraph = {
+      size: 32,
+      font: "Liberation Sans",
+    };
+    const subLines = text.split("\n");
+    if (subLines.length > 1) {
+      const children = [];
+      for (let i = 0; i < subLines.length; i++) {
+        children.push(
+          new TextRun({
+            ...paragraph,
+            text: subLines[i],
+            break: Number(i > 0),
+          })
+        );
+      }
+      return new Paragraph({ children });
+    } else {
+      return new Paragraph({
+        children: [
+          new TextRun({
+            ...paragraph,
+            text,
+          }),
+        ],
+      });
+    }
   };
 
   const createActorText = (text: string) => createParagraph(text);
